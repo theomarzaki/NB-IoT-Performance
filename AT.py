@@ -5,8 +5,8 @@ import time
 
 class IoT():
 
-    def __init__(self,serial_dev):
-        self.device = serial.Serial(serial_dev,9600)
+    def __init__(self,serial_dev,baud_rate):
+        self.device = serial.Serial(serial_dev,baud_rate)
         self.device.flushInput()
 
     def Command(self,command):
@@ -29,7 +29,7 @@ class IoT():
 
 
 def main():
-    IoT("/dev/ttyAMA0").Command("AT")
+    IoT("/dev/ttyAMA0",9600).Command("AT")
 
 if __name__ == "__main__":
     main()
