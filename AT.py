@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO #specific for Raspberry pi
 import serial
 import time
 from logger import log
+import sys
 
 class IoT():
     def __init__(self,serial_dev,baud_rate):
@@ -29,7 +30,7 @@ class IoT():
                 self.logger.error("no device connected")
 
 def main():
-    IoT("/dev/ttyAMA0",9600).Command("AT")
+    IoT("/dev/ttyAMA0",9600).Command(str(sys.argv[1]))
 
 if __name__ == "__main__":
     main()
