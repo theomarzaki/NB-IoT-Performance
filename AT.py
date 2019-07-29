@@ -18,6 +18,7 @@ class IoT():
                 time.sleep(0.1)
                 rec_buffer = self.device.read(self.device.inWaiting())
             if rec_buffer != '':
+                print(rec_buffer.decode()) #debugging purposes
                 self.logger.debug(rec_buffer.decode())
                 rec_buffer = ''
         except Exception as e:
