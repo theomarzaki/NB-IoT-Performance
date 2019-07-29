@@ -1,5 +1,3 @@
-cd logs
-
-rm -rf *
+rm -rf module.log
 
 python AT.py

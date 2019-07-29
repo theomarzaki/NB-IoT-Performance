@@ -28,7 +28,7 @@ class IoT():
                 logging.error("no device connected")
 
 def main():
-    logging.basicConfig(filename='logs/module.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(filename='module.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
     IoT("/dev/ttyAMA0",9600).Command("AT")
 
 if __name__ == "__main__":
