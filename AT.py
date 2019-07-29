@@ -29,7 +29,7 @@ class IoT():
                 self.logger.error("no device connected")
 
 def main():
-    logger = Logger('module_logger')
+    logger = logging.Logger('module_logger')
     logger.basicConfig(filename='module.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
     IoT("/dev/ttyAMA0",9600).Command("AT")
 
