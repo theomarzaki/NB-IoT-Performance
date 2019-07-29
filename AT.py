@@ -1,10 +1,9 @@
 import RPi.GPIO as GPIO #specific for Raspberry pi
 import serial
 import time
-
+import logging
 
 class IoT():
-
     def __init__(self,serial_dev,baud_rate):
         self.device = serial.Serial(serial_dev,baud_rate)
         self.device.flushInput()
@@ -18,17 +17,18 @@ class IoT():
                 time.sleep(0.1)
                 rec_buffer = self.device.read(self.device.inWaiting())
             if rec_buffer != '':
-                print(rec_buffer.decode())
+                logging.debug(rec_buffer.decode())
                 rec_buffer = ''
         except Exception as e:
-            print(e)
+            logging.exception("Could not send to module")
             if self.device != None:
                 self.device.close()
             else:
-                print("no device connected")
 
+                logging.error("no device connected")
 
 def main():
+    logging.basicConfig(filename='module.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
     IoT("/dev/ttyAMA0",9600).Command("AT")
 
 if __name__ == "__main__":
