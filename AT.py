@@ -5,7 +5,6 @@ import logging
 
 class IoT():
     def __init__(self,serial_dev,baud_rate):
-        self.logger = logging.getLogger('module_logger')
         self.device = serial.Serial(serial_dev,baud_rate)
         self.device.flushInput()
 
@@ -19,18 +18,17 @@ class IoT():
                 rec_buffer = self.device.read(self.device.inWaiting())
             if rec_buffer != '':
                 print(rec_buffer.decode()) #debugging purposes
-                self.logger.debug(rec_buffer.decode())
+                logging.debug(rec_buffer.decode())
                 rec_buffer = ''
         except Exception as e:
-            self.logger.exception("Could not send to module")
+            logging.exception("Could not send to module")
             if self.device != None:
                 self.device.close()
             else:
-                self.logger.error("no device connected")
+                logging.error("no device connected")
 
 def main():
-    logger = logging.Logger('module_logger')
-    logger.basicConfig(filename='module.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
+    logging.basicConfig(filename='module.log', filemode='w', format='%(asctime)s - %(levelname)s - %(message)s')
     IoT("/dev/ttyAMA0",9600).Command("AT")
 
 if __name__ == "__main__":
