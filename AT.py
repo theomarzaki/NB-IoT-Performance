@@ -1,8 +1,9 @@
+# This file represents the AT command interface used to connect with the module
+
 #import RPi.GPIO as GPIO #specific for Raspberry pi
 import serial
 import time
 from logger import log
-import sys
 
 class IoT():
     def __init__(self,serial_dev,baud_rate):
@@ -28,9 +29,3 @@ class IoT():
                 self.device.close()
             else:
                 self.logger.error("no device connected")
-
-def main():
-    IoT("/dev/ttyACM1",115200).Command(str(sys.argv[1]))
-
-if __name__ == "__main__":
-    main()
