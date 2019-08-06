@@ -2,10 +2,11 @@ from AT import IoT
 from GA import GA
 from utils import Evolve
 from logger import log
-from network_interface import Listener
+from network_interface import Listener,Sender
 import getopt,sys,configparser
 
-
+SENDER = '-s'
+RECEIVER = '-r'
 
 def main(argv):
     # obtaining confiurations
@@ -16,28 +17,24 @@ def main(argv):
 
 
     for opt, arg in opts:
-        if opt == '-s':
+        if opt == SENDER:
 
 
-            server_data = Sender(config.get('Sender','address'),int(config.get('Sender','port')))
+            client = Sender(config.get('Sender','address'),int(config.get('Sender','port')))
+            client.send()
 
 
             # set device based on configurations
             # module = IoT(config.get('Module','device'),int(config.get('Module','baud_rate')))
 
-        elif opt == '-r':
-
-
+        elif opt == RECEIVER:
 
             # listener to recieve data from the module
-            client_data = Listener(config.get('Receiver','address'),int(config.get('Receiver','port')))
-
-            print("data: {}".format(client_data))
+            server = Listener(config.get('Receiver','address'),int(config.get('Receiver','port')))
+            server.listen()
 
         else:
             sys.exit()
-
-
 
 
 if __name__ == '__main__':
