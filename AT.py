@@ -1,5 +1,5 @@
-# This file represents the AT command interface used to connect with the module
 
+# This file represents the AT command interface used to connect with the module
 #import RPi.GPIO as GPIO #specific for Raspberry pi
 import serial
 import time
