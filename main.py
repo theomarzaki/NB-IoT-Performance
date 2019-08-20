@@ -1,4 +1,4 @@
-from AT import IoT
+from IoT import Module
 from GA import GA
 from utils import Evolve
 from logger import log
@@ -19,13 +19,16 @@ def main(argv):
     for opt, arg in opts:
         if opt == SENDER:
 
+            # client = Sender(config.get('Sender','address'),int(config.get('Sender','port')))
+            # client.send()
 
-            client = Sender(config.get('Sender','address'),int(config.get('Sender','port')))
-            client.send()
 
 
-            # set device based on configurations
-            # module = IoT(config.get('Module','device'),int(config.get('Module','baud_rate')))
+            #set device based on configurations
+            module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
+            # set up p2p connection on modem
+            module.SetUpConnection()
+
 
         elif opt == RECEIVER:
 
