@@ -20,7 +20,7 @@ class Module():
             self.device.write((command + '\r\n').encode())
             time.sleep(0.1)
             if self.device.inWaiting():
-                time.sleep(0.1)
+                time.sleep(1)
                 rec_buffer = self.device.read(self.device.inWaiting())
             if rec_buffer != '':
                 print(rec_buffer.decode()) #debugging purposes

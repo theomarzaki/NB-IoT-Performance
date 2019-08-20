@@ -29,6 +29,9 @@ def main(argv):
             module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
             # set up p2p connection on modem
             module.SetUpConnection() # os.system("wvdial")
+            time.sleep(0.1)
+            module.Command("ATO")
+            time.sleep(1)
 
             while True:
                 cmd = input("Command: ")
