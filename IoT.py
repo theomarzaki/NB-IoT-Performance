@@ -11,8 +11,8 @@ class Module():
         self.device = serial.Serial(serial_dev,baud_rate)
         self.device.flushInput()
         self.dial_number = '*99***1#;'
-        self.username = user
-        self.password = password
+        self.username = "user"
+        self.password = "password"
 
     def Command(self,command):
         try:
@@ -25,7 +25,7 @@ class Module():
             if rec_buffer != '':
                 print(rec_buffer.decode()) #debugging purposes
                 self.logger.debug(command + " : " + rec_buffer.decode())
-                return rec_buffer
+                return rec_buffer.decode().replace("\n","")
         except Exception as e:
             self.logger.exception("Could not send to module")
             if self.device != None:
@@ -38,16 +38,15 @@ class Module():
         init_1 = "ATZ" #check response is OK
         init_2 = ""
 
-        while True():
-            #init modem configs
-            response = self.Command(init_1)
-            print(response)
-            #set up dial connection
-            response = self.Command(dial_command)
-            print(response)
+        #init modem configs
+        response = self.Command(init_1)
+        assert(response == "OK")
+        #set up dial connection
+        response = self.Command(dial_command)
+        assert(response == "CONNECT")
 
 
-            #obtain the ip addresses
 
-            #check that command can still be sent
-            pass
+        #obtain the ip addresses
+
+        #check that command can still be sent
