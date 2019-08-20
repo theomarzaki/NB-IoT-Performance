@@ -10,7 +10,7 @@ class Module():
         self.logger = log
         self.device = serial.Serial(serial_dev,baud_rate)
         self.device.flushInput()
-        self.dial_number = '*99***1#;'
+        self.dial_number = '*99***1#'
         self.username = "user"
         self.password = "password"
 
