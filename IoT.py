@@ -40,10 +40,10 @@ class Module():
 
         #init modem configs
         response = self.Command(init_1)
-        assert(response == "OK")
+        assert("OK" in response)
         #set up dial connection
         response = self.Command(dial_command)
-        assert(response == "CONNECT")
+        assert("CONNECT" in response)
 
 
         #obtain the ip addresses
