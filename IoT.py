@@ -46,7 +46,6 @@ class Module():
         assert(response == "CONNECT")
 
 
-
         #obtain the ip addresses
 
         #check that command can still be sent

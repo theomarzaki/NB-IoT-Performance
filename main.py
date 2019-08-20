@@ -29,6 +29,10 @@ def main(argv):
             # set up p2p connection on modem
             module.SetUpConnection()
 
+            while True:
+                cmd = input("Command: ")
+                module.Command(cmd)
+
 
         elif opt == RECEIVER:
 
