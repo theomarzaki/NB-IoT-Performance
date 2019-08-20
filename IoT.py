@@ -4,6 +4,7 @@
 import serial
 import time
 from logger import log
+import os
 
 class Module():
     def __init__(self,serial_dev,baud_rate):
@@ -34,17 +35,17 @@ class Module():
                 self.logger.error("no device connected")
 
     def SetUpConnection(self):
-        dial_command = "ATD" + self.dial_number #check response is CONNECT
-        init_1 = "ATZ" #check response is OK
-        init_2 = ""
-
-        #init modem configs
-        response = self.Command(init_1)
-        assert("OK" in response)
-        #set up dial connection
-        response = self.Command(dial_command)
-        assert("CONNECT" in response)
-
+        # dial_command = "ATD" + self.dial_number #check response is CONNECT
+        # init_1 = "ATZ" #check response is OK
+        # init_2 = ""
+        #
+        # #init modem configs
+        # response = self.Command(init_1)
+        # assert("OK" in response)
+        # #set up dial connection
+        # response = self.Command(dial_command)
+        # assert("CONNECT" in response)
+        os.subprocess("wvdial")
 
         #obtain the ip addresses
 
