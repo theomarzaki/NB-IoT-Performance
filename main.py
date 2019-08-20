@@ -4,7 +4,7 @@ from utils import Evolve
 from logger import log
 from network_interface import Listener,Sender
 import getopt,sys,configparser
-import subprocess
+import os
 
 SENDER = '-s'
 RECEIVER = '-r'
@@ -29,7 +29,7 @@ def main(argv):
             module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
             # set up p2p connection on modem
             # module.SetUpConnection()
-            subprocess("wvdial")
+            os.system("wvdial")
 
             while True:
                 cmd = input("Command: ")
