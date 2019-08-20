@@ -45,7 +45,7 @@ class Module():
         # #set up dial connection
         # response = self.Command(dial_command)
         # assert("CONNECT" in response)
-        os.subprocess("wvdial")
+        subprocess("wvdial")
 
         #obtain the ip addresses
 
