@@ -5,6 +5,7 @@ import serial
 import time
 from logger import log
 import os
+import subprocess
 
 class Module():
     def __init__(self,serial_dev,baud_rate):
