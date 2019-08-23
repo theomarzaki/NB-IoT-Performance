@@ -1,3 +1,3 @@
-docker build -t IoT .
+docker build -t iot .
 
-docker run --device=/dev/ttyUSB0 -it IoT
+docker run --privileged --device=/dev/ttyUSB0 -it iot
