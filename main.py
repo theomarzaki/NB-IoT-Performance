@@ -18,6 +18,8 @@ def main(argv):
     # obtain command line arguments. Sender --> Module sending TCP packets , Receiver --> server to recieve TCP packets sent from module
     opts, args = getopt.getopt(argv,"sr",["sender","receiver"])
 
+    threadLock = threading.Lock() #allows synchronoisty of the modem dial up and main communication
+
     for opt, arg in opts:
         if opt == SENDER:
 
@@ -27,7 +29,7 @@ def main(argv):
             #set device based on configurations
             module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
 
-            dialup = DialUpThread(module)
+            DialUpThread(threadLock,module).start()
 
             # set up p2p connection on modem
             print("finished dial up on main method")
