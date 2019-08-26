@@ -10,4 +10,4 @@ WORKDIR /communication_layer
 
 RUN pip3 install -r configuration/requirements.txt
 
-CMD ["sh","configuration/init.sh"]
+RUN sh configuration/init.sh
