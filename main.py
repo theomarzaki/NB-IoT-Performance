@@ -1,4 +1,4 @@
-from IoT import Module
+from IoT import Module, DialUpThread
 from GA import GA
 from utils import Evolve
 from logger import log
@@ -6,6 +6,7 @@ from network_interface import Listener,Sender
 import getopt,sys,configparser
 import os
 import time
+import threading
 
 SENDER = '-s'
 RECEIVER = '-r'
@@ -17,26 +18,19 @@ def main(argv):
     # obtain command line arguments. Sender --> Module sending TCP packets , Receiver --> server to recieve TCP packets sent from module
     opts, args = getopt.getopt(argv,"sr",["sender","receiver"])
 
-
     for opt, arg in opts:
         if opt == SENDER:
 
             # client = Sender(config.get('Sender','address'),int(config.get('Sender','port')))
             # client.send()
 
-
-
             #set device based on configurations
             module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
-            # set up p2p connection on modem
-            module.SetUpConnection() # os.system("wvdial")
-            time.sleep(0.1)
-            module.Command("ATO")
-            time.sleep(1)
 
-            while True:
-                cmd = input("Command: ")
-                module.Command(cmd)
+            dialup = DialUpThread(module)
+
+            # set up p2p connection on modem
+            print("finished dial up on main method")
 
 
         elif opt == RECEIVER:

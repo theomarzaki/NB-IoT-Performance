@@ -1,9 +1,9 @@
-
 # This file represents the AT command interface used to connect with the module
 #import RPi.GPIO as GPIO #specific for Raspberry pi
 import serial
 import time
 from logger import log
+import threading
 
 class Module():
     def __init__(self,serial_dev,baud_rate):
@@ -49,3 +49,17 @@ class Module():
         #obtain the ip addresses
 
         #check that command can still be sent
+
+class DialUpThread(threading.Thread):
+    def __init__(self,thread_id,module):
+        threading.Thread.__init__(self)
+        self.thread_id = thread_id
+        self.module = module
+
+    def run(self):
+        print("Starting Dial Up Thread: {}".format(self.module)
+        threading.Lock().acquire()
+        # dial up here
+        print("Dialing Up")
+
+        threading.Lock().release()

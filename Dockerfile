@@ -2,7 +2,7 @@ FROM debian:buster
 
 RUN apt-get update
 
-RUN apt-get install -y build-essential vim python3 python3-pip
+RUN apt-get install -y build-essential vim python3 python3-pip ppp
 
 COPY . /communication_layer
 
