@@ -14,7 +14,7 @@ RECEIVER = '-r'
 def main(argv):
     # obtaining confiurations
     config = configparser.ConfigParser()
-    config.read('confiuration/config.ini')
+    config.read('configuration/config.ini')
     # obtain command line arguments. Sender --> Module sending TCP packets , Receiver --> server to recieve TCP packets sent from module
     opts, args = getopt.getopt(argv,"sr",["sender","receiver"])
 
