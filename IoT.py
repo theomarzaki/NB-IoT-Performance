@@ -51,15 +51,16 @@ class Module():
         #check that command can still be sent
 
 class DialUpThread(threading.Thread):
-    def __init__(self,thread_id,module):
+    def __init__(self,thread_id,threadLock,module):
         threading.Thread.__init__(self)
         self.thread_id = thread_id
         self.module = module
+        self.threadLock = threadLock
 
     def run(self):
         print("Starting Dial Up Thread: {}".format(self.module)
-        threading.Lock().acquire()
+        self.threadLock.acquire()
         # dial up here
         print("Dialing Up")
 
-        threading.Lock().release()
+        self.threadLock.release()
