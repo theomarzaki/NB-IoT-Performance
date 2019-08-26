@@ -59,7 +59,8 @@ class DialUpThread(threading.Thread):
     def run(self):
         print("Starting Dial Up Thread: {}".format(self.module))
         self.threadLock.acquire()
-        # dial up here
-        print("Dialing Up")
+
+        # modem specific dial up
+        module.SetUpConnection()
 
         self.threadLock.release()

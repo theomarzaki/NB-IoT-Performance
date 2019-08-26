@@ -14,7 +14,7 @@ RECEIVER = '-r'
 def main(argv):
     # obtaining confiurations
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read('confiuration/config.ini')
     # obtain command line arguments. Sender --> Module sending TCP packets , Receiver --> server to recieve TCP packets sent from module
     opts, args = getopt.getopt(argv,"sr",["sender","receiver"])
 
@@ -22,10 +22,6 @@ def main(argv):
 
     for opt, arg in opts:
         if opt == SENDER:
-
-            # client = Sender(config.get('Sender','address'),int(config.get('Sender','port')))
-            # client.send()
-
             #set device based on configurations
             module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
 
@@ -33,6 +29,9 @@ def main(argv):
 
             # set up p2p connection on modem
             print("finished dial up on main method")
+
+            # client = Sender(config.get('Sender','address'),int(config.get('Sender','port')))
+            # client.send()
 
 
         elif opt == RECEIVER:
