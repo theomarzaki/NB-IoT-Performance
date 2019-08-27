@@ -4,6 +4,7 @@ import serial
 import time
 from logger import log
 import threading
+import subprocess
 
 class Module():
     def __init__(self,serial_dev,baud_rate):
@@ -45,6 +46,9 @@ class Module():
         # response = self.Command(dial_command)
         # assert("CONNECT" in response)
 
+        dialup_process = subprocess.check_output("wvdial",shell=True)
+        print(dialup_processS)
+
         print("dialing")
 
 
@@ -59,7 +63,7 @@ class DialUpThread(threading.Thread):
         self.threadLock = threadLock
 
     def run(self):
-        print("Starting Dial Up Thread: {}".format(self.module))
+        print("Starting Dial Up ...".)
         self.threadLock.acquire()
 
         # modem specific dial up
