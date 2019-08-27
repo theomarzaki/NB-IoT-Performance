@@ -63,6 +63,6 @@ class DialUpThread(threading.Thread):
         self.threadLock.acquire()
 
         # modem specific dial up
-        module.SetUpConnection()
+        self.module.SetUpConnection()
 
         self.threadLock.release()
