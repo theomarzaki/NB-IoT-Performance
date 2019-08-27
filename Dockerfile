@@ -10,4 +10,4 @@ WORKDIR /communication_layer
 
 RUN pip3 install -r configuration/requirements.txt
 
-RUN mv configuration/wvdial.conf /etc/
+RUN sh init.sh
