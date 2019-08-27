@@ -10,4 +10,6 @@ WORKDIR /communication_layer
 
 RUN pip3 install -r configuration/requirements.txt
 
+RUN service rsyslog start
+
 RUN sh configuration/init.sh
