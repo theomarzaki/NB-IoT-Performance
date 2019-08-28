@@ -7,6 +7,5 @@ asyncmap 0
 defaultroute
 noipdefault
 lock
-+ipv6
 connect "/usr/sbin/chat -v -t 240 -f /etc/ppp/chat-isp"
 :
