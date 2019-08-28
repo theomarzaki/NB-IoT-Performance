@@ -5,5 +5,5 @@ ABORT 'ERROR'
 '' ATZ
 OK^M ATD*99***1#;
 CONNECT ''
-ogin:user
-sword:pass
+'' ogin:user
+'' sword:pass
