@@ -20,6 +20,8 @@ def main(argv):
 
     interface_up = DialUpThread(threadLock,module).start()
 
+    DialUpThread.join()
+
     if(!interface_up):
         print("something went wrong")
     else:
