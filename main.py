@@ -18,10 +18,13 @@ def main(argv):
 
     module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
 
-    DialUpThread(threadLock,module).start()
+    interface_up = DialUpThread(threadLock,module).start()
 
-    while True:
-        module.Command(input('Execute Command: '))
+    if(!interface_up):
+        print("something went wrong")
+    else:
+        while True:
+            module.Command(input('Execute Command: '))
 
 
 if __name__ == '__main__':
