@@ -20,6 +20,9 @@ def main(argv):
 
     DialUpThread(threadLock,module).start()
 
+    while True:
+        module.Command(input('Execute Command: '))
+
 
 if __name__ == '__main__':
     main(sys.argv[1:])

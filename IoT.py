@@ -29,20 +29,16 @@ class Module():
             if self.device != None:
                 self.device.close()
             else:
-                self.logger.error("no device connected")
+                self.logger.error("No device connected")
 
     def SetUpConnection(self):
         self.logger.debug("dialing")
         subprocess.check_output("sh init.sh",shell=True)
-        if(subprocess.check_output("ifconfig | grep ppp0",shell=True) != ""):
-            print("SOMETHING WENT WRONG")
+        if(subprocess.check_output("ifconfig | grep ppp0",shell=True) == ""):
+            self.logger.error("Could not initiate interface")
         else:
-            print("INTERFACE IS UP AND RUNNING")
+            self.logger.debug("Interface is up and running")
 
-
-        #obtain the ip addresses
-
-        #check that command can still be sent
 
 class DialUpThread(threading.Thread):
     def __init__(self,threadLock,module):
