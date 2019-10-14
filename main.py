@@ -20,7 +20,7 @@ def main():
 
     interface_up = DialUpThread(threadLock,module).start()
 
-    sleep(10)
+    time.sleep(10)
 
     if(not interface_up):
         print("something went wrong")
