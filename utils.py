@@ -1,5 +1,5 @@
 from GA import GA
-from logging import log
+from logger import log
 
 # START
 # Generate the initial population

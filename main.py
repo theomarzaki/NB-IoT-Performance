@@ -1,7 +1,7 @@
 from IoT import Module, DialUpThread
 from GA import GA
 from utils import Evolve
-from logging import log
+from logger import log
 from network_interface import Listener,Sender
 import getopt,sys,configparser
 import os

@@ -2,7 +2,7 @@
 #import RPi.GPIO as GPIO #specific for Raspberry pi
 import serial
 import time
-from logging import log
+from logger import log
 import threading
 import subprocess
 
