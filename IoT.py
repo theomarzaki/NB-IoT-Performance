@@ -46,8 +46,8 @@ class Module():
         # response = self.Command(dial_command)
         # assert("CONNECT" in response)
 
-        dialup_process = subprocess.check_output("pppd",shell=True)
-        print(dialup_processS)
+        dialup_process = subprocess.check_output("sh init.sh",shell=True)
+        print(dialup_process)
 
         print("dialing")
 

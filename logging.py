@@ -1,16 +1,3 @@
-# -*- coding: utf-8 -*-
-'''
-Name: HL78xx_DebugCapture.py
-Author: Mihir Shah
-Created: 3rd August 2018.
-Description:
-This script will read raw data from the HL78xx debug port and save it to a .bin file.
-
-Syntax: sudo python HL78xx_DebugCapture.py /dev/ttyUSBx (where x = port number)
-Output: Debug logs saved in "debuglog_timestamp.bin" file.
-
-'''
-
 import logging
 import serial
 import datetime
@@ -30,28 +17,25 @@ def create_file():
     fileobj = open(logfilename, "w+")
     return fileobj
 
-if len(sys.argv) != 2:
-    print('Insufficient arguments. Please provide only debug port information.')
-    exit()
+def passive_log():
+    try:
+        serialport = serial.Serial(str(sys.argv[1]), 921600, timeout=0.1) #change
+        if (serialport.isOpen() == False):
+            print('Failed to open Serial Port.')
+            exit()
 
-try:
-    serialport = serial.Serial(str(sys.argv[1]), 921600, timeout=0.1)
-    if (serialport.isOpen() == False):
-        print('Failed to open Serial Port.')
-        exit()
+        fileobj = create_file()
 
-    fileobj = create_file()
+        while True:
+            command = serialport.readline()
+            if str(command):
+                fileobj.write(str(command))
+            if(os.stat(logfilename).st_size > max_file_size):
+                fileobj.close()
+                fileobj = create_file()
 
-    while True:
-        command = serialport.readline()
-        if str(command):
-            fileobj.write(str(command))
-        if(os.stat(logfilename).st_size > max_file_size):
-            fileobj.close()
-            fileobj = create_file()
-
-except KeyboardInterrupt:
-    print('interrupt received, stopping…')
-finally:
-    serialport.close()
-    fileobj.close();
+    except KeyboardInterrupt:
+        print('interrupt received, stopping…')
+    finally:
+        serialport.close()
+        fileobj.close();
