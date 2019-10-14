@@ -36,7 +36,7 @@ def main(argv):
                 log.debug("Interface is up and running")
 
         elif opt == COMMAND_MODE:
-            log_thread = Thread(target = passive_log(), args =(config.get('Module','device'),))
+            log_thread = threading.Thread(target = passive_log(), args =(config.get('Module','device'),))
             log_thread.start()
             while True:
                 module.Command(input('Execute Command: '))
