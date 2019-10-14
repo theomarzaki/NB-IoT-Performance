@@ -9,28 +9,40 @@ import time
 import threading
 import subprocess
 
-def main():
+DIAL_MODE = '-d'
+COMMAND_MODE = '-c'
+
+def main(argv):
     # obtaining confiurations
     config = configparser.ConfigParser()
     config.read('configuration/config.ini')
-    # obtain command line arguments. Sender --> Module sending TCP packets , Receiver --> server to recieve TCP packets sent from module
+
+    opts, args = getopt.getopt(argv,"dc",["dialup","command"])
 
     threadLock = threading.Lock() #allows synchronoisty of the modem dial up and main communication
 
     module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
 
-    DialUpThread(threadLock,module).start()
+    for opt, arg in opts:
+        if opt == DIAL_MODE:
 
-    time.sleep(10)
+            DialUpThread(threadLock,module).start()
 
-    if(subprocess.check_output("ifconfig | grep ppp0",shell=True) == ""):
-        log.error("Could not initiate interface")
-    else:
-        log.debug("Interface is up and running")
-        while True:
-            module.Command(input('Execute Command: '))
+            time.sleep(10)
+
+            if(subprocess.check_output("ifconfig | grep ppp0",shell=True) == ""):
+                log.error("Could not initiate interface")
+            else:
+                log.debug("Interface is up and running")
+
+        elif opt == COMMAND_MODE:
+            while True:
+                module.Command(input('Execute Command: '))
+
+        else:
+            sys.exit()
 
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
