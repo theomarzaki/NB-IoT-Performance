@@ -11,13 +11,14 @@ import subprocess
 
 DIAL_MODE = '-d'
 COMMAND_MODE = '-c'
+DEBUG_MODE = '-l'
 
 def main(argv):
     # obtaining confiurations
     config = configparser.ConfigParser()
     config.read('configuration/config.ini')
 
-    opts, args = getopt.getopt(argv,"dc",["dialup","command"])
+    opts, args = getopt.getopt(argv,"dcl",["dialup","command","debug"])
 
     threadLock = threading.Lock() #allows synchronoisty of the modem dial up and main communication
 
@@ -36,10 +37,12 @@ def main(argv):
                 log.debug("Interface is up and running")
 
         elif opt == COMMAND_MODE:
-            log_thread = threading.Thread(target = passive_log(config.get('Module','device')))
-            log_thread.start()
             while True:
                 module.Command(input('Execute Command: '))
+
+        elif opt == DEBUG_MODE:
+            log_thread = threading.Thread(target = passive_log(config.get('Module','device')))
+            log_thread.start()
 
         else:
             sys.exit()
