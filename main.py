@@ -8,15 +8,11 @@ import os
 import time
 import threading
 
-SENDER = '-s'
-RECEIVER = '-r'
-
 def main(argv):
     # obtaining confiurations
     config = configparser.ConfigParser()
     config.read('configuration/config.ini')
     # obtain command line arguments. Sender --> Module sending TCP packets , Receiver --> server to recieve TCP packets sent from module
-    opts, args = getopt.getopt(argv,"sr",["sender","receiver"])
 
     threadLock = threading.Lock() #allows synchronoisty of the modem dial up and main communication
 

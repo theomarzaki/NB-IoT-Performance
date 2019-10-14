@@ -11,9 +11,6 @@ class Module():
         self.logger = log
         self.device = serial.Serial(serial_dev,baud_rate)
         self.device.flushInput()
-        self.dial_number = '*99***1#'
-        self.username = "user"
-        self.password = "password"
 
     def Command(self,command):
         try:
@@ -54,9 +51,7 @@ class DialUpThread(threading.Thread):
         self.threadLock = threadLock
 
     def run(self):
-        self.logger.debug("Starting Dial Up ...")
         self.threadLock.acquire()
-
         # modem specific dial up
         self.module.SetUpConnection()
 
