@@ -31,13 +31,13 @@ def create_file():
     return fileobj
 
 if len(sys.argv) != 2:
-    print 'Insufficient arguments. Please provide only debug port information.'
+    print('Insufficient arguments. Please provide only debug port information.')
     exit()
 
 try:
     serialport = serial.Serial(str(sys.argv[1]), 921600, timeout=0.1)
     if (serialport.isOpen() == False):
-        print 'Failed to open Serial Port.'
+        print('Failed to open Serial Port.')
         exit()
 
     fileobj = create_file()
@@ -51,7 +51,7 @@ try:
             fileobj = create_file()
 
 except KeyboardInterrupt:
-    print 'interrupt received, stopping…'
+    print('interrupt received, stopping…')
 finally:
     serialport.close()
     fileobj.close();
