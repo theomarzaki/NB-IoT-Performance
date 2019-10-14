@@ -18,11 +18,9 @@ def main(argv):
 
     module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
 
-    interface_up = DialUpThread(threadLock,module).start()
+    interface_up = DialUpThread(threadLock,module).start().join()
 
-    DialUpThread.join()
-
-    if(!interface_up):
+    if(not interface_up):
         print("something went wrong")
     else:
         while True:
