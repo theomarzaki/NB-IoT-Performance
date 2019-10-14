@@ -34,12 +34,6 @@ class Module():
     def SetUpConnection(self):
         self.logger.debug("dialing")
         subprocess.check_output("sh init.sh",shell=True)
-        if(subprocess.check_output("ifconfig | grep ppp0",shell=True) == ""):
-            self.logger.error("Could not initiate interface")
-            return False
-        else:
-            self.logger.debug("Interface is up and running")
-            return True
 
 
 class DialUpThread(threading.Thread):
@@ -54,5 +48,3 @@ class DialUpThread(threading.Thread):
         interface_up = self.module.SetUpConnection()
 
         self.threadLock.release()
-
-        return interface_up

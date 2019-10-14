@@ -18,15 +18,17 @@ def main():
 
     module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
 
-    interface_up = DialUpThread(threadLock,module).start()
+    DialUpThread(threadLock,module).start()
 
     time.sleep(10)
 
-    if(not interface_up):
-        print("something went wrong")
+    if(subprocess.check_output("ifconfig | grep ppp0",shell=True) == ""):
+        self.logger.error("Could not initiate interface")
     else:
+        self.logger.debug("Interface is up and running")
         while True:
             module.Command(input('Execute Command: '))
+
 
 
 if __name__ == '__main__':
