@@ -8,7 +8,7 @@ import os
 import time
 import threading
 
-def main(argv):
+def main():
     # obtaining confiurations
     config = configparser.ConfigParser()
     config.read('configuration/config.ini')
@@ -18,7 +18,8 @@ def main(argv):
 
     module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
 
-    interface_up = DialUpThread(threadLock,module).start().join()
+    interface_up = DialUpThread(threadLock,module).start()
+    DialUpThread(threadLock,module).join()
 
     if(not interface_up):
         print("something went wrong")
@@ -28,4 +29,4 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1:])
+    main()
