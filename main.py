@@ -7,6 +7,7 @@ import getopt,sys,configparser
 import os
 import time
 import threading
+import subprocess
 
 def main():
     # obtaining confiurations
@@ -23,9 +24,9 @@ def main():
     time.sleep(10)
 
     if(subprocess.check_output("ifconfig | grep ppp0",shell=True) == ""):
-        self.logger.error("Could not initiate interface")
+        log.error("Could not initiate interface")
     else:
-        self.logger.debug("Interface is up and running")
+        log.debug("Interface is up and running")
         while True:
             module.Command(input('Execute Command: '))
 
