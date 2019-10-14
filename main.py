@@ -20,28 +20,9 @@ def main(argv):
 
     threadLock = threading.Lock() #allows synchronoisty of the modem dial up and main communication
 
-    for opt, arg in opts:
-        if opt == SENDER:
-            #set device based on configurations
-            module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
+    module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
 
-            DialUpThread(threadLock,module).start()
-
-            # set up p2p connection on modem
-            print("finished dial up on main method")
-
-            # client = Sender(config.get('Sender','address'),int(config.get('Sender','port')))
-            # client.send()
-
-
-        elif opt == RECEIVER:
-
-            # listener to recieve data from the module
-            server = Listener(config.get('Receiver','address'),int(config.get('Receiver','port')))
-            server.listen()
-
-        else:
-            sys.exit()
+    DialUpThread(threadLock,module).start()
 
 
 if __name__ == '__main__':

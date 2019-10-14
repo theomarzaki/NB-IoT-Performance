@@ -35,21 +35,12 @@ class Module():
                 self.logger.error("no device connected")
 
     def SetUpConnection(self):
-        # dial_command = "ATD" + self.dial_number #check response is CONNECT
-        # init_1 = "ATZ" #check response is OK
-        # init_2 = ""
-        #
-        # #init modem configs
-        # response = self.Command(init_1)
-        # assert("OK" in response)
-        # #set up dial connection
-        # response = self.Command(dial_command)
-        # assert("CONNECT" in response)
-
-        dialup_process = subprocess.check_output("sh init.sh",shell=True)
-        print(dialup_process)
-
-        print("dialing")
+        self.logger.debug("dialing")
+        subprocess.check_output("sh init.sh",shell=True)
+        if(subprocess.check_output("ifconfig | grep ppp0",shell=True) != ""):
+            print("SOMETHING WENT WRONG")
+        else:
+            print("INTERFACE IS UP AND RUNNING")
 
 
         #obtain the ip addresses
@@ -63,7 +54,7 @@ class DialUpThread(threading.Thread):
         self.threadLock = threadLock
 
     def run(self):
-        print("Starting Dial Up ...")
+        self.logger.debug("Starting Dial Up ...")
         self.threadLock.acquire()
 
         # modem specific dial up
