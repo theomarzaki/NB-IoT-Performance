@@ -19,7 +19,7 @@ def create_file():
 
 def passive_log(module):
     try:
-        serialport = serial.Serial(module, 921600, timeout=0.1) #change
+        serialport = serial.Serial(module, 921600, timeout=0.1)
         if (serialport.isOpen() == False):
             print('Failed to open Serial Port.')
             exit()

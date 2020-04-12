@@ -22,7 +22,7 @@ def main(argv):
 
     threadLock = threading.Lock() #allows synchronoisty of the modem dial up and main communication
 
-    module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
+    # module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
 
     for opt, arg in opts:
         if opt == DIAL_MODE:

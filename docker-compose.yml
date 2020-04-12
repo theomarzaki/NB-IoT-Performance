@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  network_interface:
+    build: .
+    ports:
+      - "7000:7000"
+    tty: true
+    stdin_open: true
+    privileged: true
+    depends_on:
+      - elk
+    links:
+      - elk
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      - /dev/ttyUSB1:/dev/ttyUSB1
+    logging:
+      driver: "gelf"
+      options:
+        gelf-address: "udp://localhost:12201"
+
+  elk:
+    image: sebp/elk
+    tty: true
+    stdin_open: true
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
