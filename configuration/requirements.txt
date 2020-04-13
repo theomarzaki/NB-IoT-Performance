@@ -1,1 +1,5 @@
 pyserial
+torch
+pandas
+numpy
+matplotlib

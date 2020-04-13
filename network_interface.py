@@ -28,7 +28,7 @@ class Listener():
 
 class Sender():
 
-    # temporary class to test out the communcation between the module over TCP
+    # Sends the AT commands if the module is conncted from edge cloud
 
     def __init__(self,address,port):
         self.address = address
@@ -38,7 +38,7 @@ class Sender():
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.address, self.port))
-            s.sendall(b'Hello, world')
+            s.sendall(b'AT')
             data = s.recv(1024)
 
         print('Received', repr(data))
