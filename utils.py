@@ -1,6 +1,7 @@
 import torch
 import numpy as np
 
+#takes action based on the output of the reinforcement learning model, Sending AT commands to the module to set the configurations
 def takeAction(action_tensor,module):
     do_nothing = torch.tensor([1,0,0,0,0]).float()
     increase_timer = torch.tensor([0,1,0,0,0]).float()
@@ -32,13 +33,14 @@ def takeAction(action_tensor,module):
     else:
         pass
 
-
+#Defines a min max scaler to preprocess the variables, to match the processing used by predictive models
 def MinMaxScaler(scaler,input):
     input = np.array(input)
     x_std = (input - scaler.min_) / (scaler.data_range_ + scaler.min_) - scaler.min_
     x_scaled = x_std * ((scaler.data_range_ + scaler.min_) - scaler.min_) + scaler.min_
     return x_scaled
 
+#preforms AT commands to obtain the parameters of the device
 def getFeatures(module):
     ec = 0.30    #module.Command('AT') MODULE SPECIFIC
     ms = 2698.84   #module.Command('AT') MODULE SPECIFIC

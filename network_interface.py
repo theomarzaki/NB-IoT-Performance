@@ -22,9 +22,8 @@ class Listener():
                     print(data)
                     if not data:
                         break
-                conn.sendall("Hello World !")
+                conn.sendall("AT")
                 print(data)
-
 
 class Sender():
 
