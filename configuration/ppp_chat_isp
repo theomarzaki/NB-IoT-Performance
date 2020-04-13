@@ -1,0 +1,9 @@
+ABORT 'BUSY'
+ABORT 'NO CARRIER'
+ABORT 'NO ANSWER'
+ABORT 'ERROR'
+'' ATZ
+OK^M ATD*99***1#;
+CONNECT ''
+'' ogin:user
+'' sword:pass

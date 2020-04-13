@@ -1,0 +1,11 @@
+debug
+/dev/ttyUSB0
+115200
+modem
+crtscts
+asyncmap 0
+defaultroute
+noipdefault
+lock
+connect "/usr/sbin/chat -v -t 240 -f /etc/ppp/chat-isp"
+:

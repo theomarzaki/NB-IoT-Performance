@@ -1,41 +1,54 @@
-from GA import GA
-from logger import log
+import torch
+import numpy as np
 
-# START
-# Generate the initial population
-# Compute fitness
-# REPEAT
-#     Selection
-#     Crossover
-#     Mutation
-#     Compute fitness
-# UNTIL population has converged
-# STOP
+def takeAction(action_tensor,module):
+    do_nothing = torch.tensor([1,0,0,0,0]).float()
+    increase_timer = torch.tensor([0,1,0,0,0]).float()
+    decrease_timer = torch.tensor([0,0,1,0,0]).float()
+    increase_packet_size = torch.tensor([0,0,0,1,0]).float()
+    decrease_packet_size = torch.tensor([0,0,0,0,1]).float()
 
-def Evolve():
-    # 'training/exploration' for the GA. Computing optimal Configration
-    GA_wrapper = GA()
-    population = GA_wrapper.initial_population()
-    fitness = GA_wrapper.apply_fitness(population)
-    best_fitness, best_config = GA_wrapper.get_best_config(population)
-    while(True):
-        log.debug("Selecting Population ... ")
-        selected_population = GA_wrapper.selection(population)
-        log.debug("Applying Cross-Over ...")
-        crossed_population = GA_wrapper.cross_over(selected_population)
-        log.debug("Mutating Population ...")
-        mutated_population = GA_wrapper.mutate(crossed_population)
+    if torch.equal(action_tensor,increase_packet_size):
+        previous_packet = module.command('AT+KIPOPT?')
+        module.command('AT+KIPOPT={}'.format(previous_packet + 64)) #2^6 packet size increase
+        print("increase packet size")
+    elif torch.equal(action_tensor,decrease_packet_size):
+        previous_packet = module.command('AT+KIPOPT?')
+        module.command('AT+KIPOPT={}'.format(previous_packet - 64)) #2^6 packet size decrease
+        print("decrease packet size")
+    elif torch.equal(action_tensor,decrease_timer):
+        previous_timer = module.Command('AT+CPSMS?')
+        new_timer = "{0:b}".format(int(previous_timer) - 2)
+        module.Command('AT+CPSMS={}'.format(new_timer))
+        print("decrease timer")
+    elif torch.equal(action_tensor,increase_timer):
+        previous_timer = module.Command('AT+CPSMS?')
+        new_timer = "{0:b}".format(int(previous_timer) + 2)
+        module.Command('AT+CPSMS={}'.format(new_timer))
+        print("increase timer")
+    elif torch.equal(action_tensor,do_nothing):
+        print("Do Nothing")
+        pass
+    else:
+        pass
 
-        new_fitness,new_config = GA_wrapper.get_best_config(mutated_population)
 
-        if new_fitness > best_fitness:
-            best_fitness = new_fitness
-            best_config = new_config
+def MinMaxScaler(scaler,input):
+    input = np.array(input)
+    x_std = (input - scaler.min_) / (scaler.data_range_ + scaler.min_) - scaler.min_
+    x_scaled = x_std * ((scaler.data_range_ + scaler.min_) - scaler.min_) + scaler.min_
+    return x_scaled
 
-        log.debug("Current Best Fitness: {}, Best Fitness: {}, Config: {}".format(best_fitness,new_fitness,new_config))
+def getFeatures(module):
+    ec = 0.30    #module.Command('AT') MODULE SPECIFIC
+    ms = 2698.84   #module.Command('AT') MODULE SPECIFIC
+    ecl = 0.38    #module.Command('AT') MODULE SPECIFIC
+    location_coverage = module.Command('AT+CSQ')
+    active_timer = module.Command('AT+CPSMS?')
+    tau = module.Command('AT+CEREG?')
+    current = 74372.5  #module.Command('AT') MODULE SPECIFIC
+    duration_of_packet = 3085.4 #mean from dataset
+    packet_size = module.command('AT+KIPOPT=')
+    interval_of_packet = float(input("Average interval between packets: "))
 
-        if(GA_wrapper.converged()):
-            log.debug("Evolution Converged ... Best Fitness: {}, Config: {}".format(best_fitness,best_config))
-            break
-
-    return best_config
+    return [ec,ms,current_max,ecl,location,duration_of_packet,interval_of_packet,packet_size,active_timer,tau]
