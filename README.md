@@ -50,17 +50,25 @@ The configuration directory, contains all the changeable parameters, to configur
 
 Contains the machine learning models used to predict single output and multiple output models for each of the metrics and data subsets.
 
+* Hyper-parameters can be subject to change.
+
 ### DNN_Regression.ipynb
 
-Contains the Deep Neural Network models that predict the multi-output metrics for both data subsets.
+* Contains the Deep Neural Network models that predict the multi-output metrics for both data subsets.
+
+* Hyper-parameters can be subject to change.
 
 ### Reinforcement_Learning.ipynb
 
 Contains the Reinforcement Learning Model (Deuling-DQN) that implements the Gradient Descent method for both subsets for each type of metric.
 
+* Hyper-parameters can be subject to change.
+
 ### NeuroEvolution.ipynb
 
 Contains the Reinforcement Learning Model (DQN) that implements the Genetic Algorithm approach for all the metrics for the data subsets.
+
+* Hyper-parameters can be subject to change.
 
 ## Running Command and Control Centre
 
