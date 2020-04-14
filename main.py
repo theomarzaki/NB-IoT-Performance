@@ -33,28 +33,30 @@ def main(argv):
 
     threadLock = threading.Lock() #allows synchronoisty of the modem dial up and main communication
 
-    # module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
+    #gets module from configuration file
+    module = Module(config.get('Module','device'),int(config.get('Module','baud_rate')))
 
-    model = None
-    module = None
-
+    #loads preprocessor
     scaler = joblib.load('Models/label_enc_no_tx.save')
 
+
+    #type of metric model will optimise
+    model = None
     if args.delay:
         model = torch.jit.load('Models/GD_model_no_tx_ms.pt')
-
     elif args.energy_consumption:
         model = torch.jit.load('Models/GD_model_no_tx_ec.pt')
-
     elif args.combination:
         model = torch.jit.load('Models/GD_model_no_tx_all.pt')
     else:
         pass
 
+    #enable file logging in addition to the elk logging infrastructure
     if args.log:
         log_thread = threading.Thread(target = passive_log(config.get('Module','device')))
         log_thread.start()
 
+    #start p2p connection with device as main connection interface
     if args.dialup:
         DialUpThread(threadLock,module).start()
         time.sleep(10)
@@ -63,18 +65,21 @@ def main(argv):
         else:
             log.debug("Interface is up and running")
 
+    #send commands to device only
     elif args.command:
         while True:
             module.Command(input('Execute Command: '))
 
+
+    #optimise the metric through rl model
     elif args.suggest:
-
+        #get model specific configuration
         configuration = torch.Tensor(getFeatures(module))
-
+        #processes configuations to match input for trained model
         config = torch.Tensor(Config(scaler,configuration).get_scaled_paramaters())
 
         action_tensor = torch.zeros(5)
-
+        # obtain the action that is needed to optimise the metric
         action_tensor[torch.argmax(model(config)).item()] = 1
         takeAction(action_tensor,module)
 

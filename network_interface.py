@@ -10,7 +10,7 @@ class Listener():
         self.address = address
         self.port = port
 
-    def listen(self):
+    def listen(self,Command):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind((self.address, self.port))
             s.listen()
@@ -22,7 +22,6 @@ class Listener():
                     print(data)
                     if not data:
                         break
-                conn.sendall("AT")
                 print(data)
 
 class Sender():
@@ -33,11 +32,11 @@ class Sender():
         self.address = address
         self.port = port
 
-    def send(self):
+    def send(self,Command):
 
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((self.address, self.port))
-            s.sendall(b'AT')
+            s.sendall(b'{}'.format(Command))
             data = s.recv(1024)
 
         print('Received', repr(data))

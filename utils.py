@@ -42,9 +42,9 @@ def MinMaxScaler(scaler,input):
 
 #preforms AT commands to obtain the parameters of the device
 def getFeatures(module):
-    ec = 0.30    #module.Command('AT') MODULE SPECIFIC
-    ms = 2698.84   #module.Command('AT') MODULE SPECIFIC
-    ecl = 0.38    #module.Command('AT') MODULE SPECIFIC
+    ec = 0.30    #module.Command('AT') MODULE SPECIFIC #mean from dataset
+    ms = 2698.84   #module.Command('AT') MODULE SPECIFIC #mean from dataset
+    ecl = 0.38    #module.Command('AT') MODULE SPECIFIC  #mean from dataset
     location_coverage = module.Command('AT+CSQ')
     active_timer = module.Command('AT+CPSMS?')
     tau = module.Command('AT+CEREG?')

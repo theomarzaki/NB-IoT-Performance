@@ -41,7 +41,7 @@ def passive_log(module):
                 fileobj = create_file()
 
     except KeyboardInterrupt:
-        print('interrupt received, stopping…')
+        print('interrupt received, stopping ...')
     finally:
         serialport.close()
         fileobj.close();
